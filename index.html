@@ -38,7 +38,8 @@ p{margin:0}
 .eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .lede{font-size:1.15rem;color:var(--muted);margin-top:14px}
 header{display:grid;gap:12px}
-.about{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:44px;max-width:760px}
+.top{margin-bottom:24px}
+.about{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:28px;max-width:760px}
 .avatar{flex:none;width:56px;height:56px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--font-mono);font-weight:500;font-size:1.05rem}
 .about-text{display:grid;gap:8px;min-width:0}
 .about-text p{font-size:.98rem;color:var(--muted)}
@@ -107,6 +108,11 @@ a{color:var(--accent)}
 </head>
 <body>
 <div class="wrap">
+  <header class="top">
+    <p class="eyebrow">People analytics case study · Power BI</p>
+    <h1>NorthStar People Analytics</h1>
+  </header>
+
   <section class="about" aria-label="About the author">
     <div class="avatar" aria-hidden="true">AM</div>
     <div class="about-text">
@@ -116,11 +122,8 @@ a{color:var(--accent)}
   </section>
 
   <header>
-    <p class="eyebrow">People analytics case study · Power BI</p>
-    <h1>NorthStar People Analytics</h1>
     <p class="lede col">NorthStar is a fictional IT company with 800 employees. In 2025 it kept growing, but almost twice as many people left. I built a four-page Power BI dashboard to find out who is leaving, why, and what the company could do about it.</p>
     <dl class="meta">
-      <div><dt>Author</dt><dd>Aleksandra Milchakova, HR Analyst</dd></div>
       <div><dt>Tools</dt><dd>Power BI Desktop, DAX, Power Query, Excel</dd></div>
       <div><dt>Data</dt><dd>Synthetic HR dataset, 7 tables</dd></div>
       <div><dt>Period</dt><dd>January 2024 – December 2025</dd></div>
