@@ -38,6 +38,13 @@ p{margin:0}
 .eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .lede{font-size:1.15rem;color:var(--muted);margin-top:14px}
 header{display:grid;gap:12px}
+.about{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:44px;max-width:760px}
+.avatar{flex:none;width:56px;height:56px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--font-mono);font-weight:500;font-size:1.05rem}
+.about-text{display:grid;gap:8px;min-width:0}
+.about-text p{font-size:.98rem;color:var(--muted)}
+.about-name{font-weight:600;color:var(--fg)!important;font-size:1.05rem!important}
+.about-name span{display:block;font-weight:400;font-size:.88rem;color:var(--muted);margin-top:2px}
+@media (max-width:480px){.about{flex-direction:column}}
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px 28px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
 .meta dt{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .meta dd{margin:4px 0 0;font-size:.95rem}
@@ -100,6 +107,14 @@ a{color:var(--accent)}
 </head>
 <body>
 <div class="wrap">
+  <section class="about" aria-label="About the author">
+    <div class="avatar" aria-hidden="true">AM</div>
+    <div class="about-text">
+      <p class="about-name">Aleksandra Milchakova <span>HR Analyst · Valencia, Spain</span></p>
+      <p>I started my career in HR and grew step by step. At Coca-Cola HBC I was an HR specialist and the SAP champion for recruiting, learning and development: I helped move these processes into SAP and trained 1,200 users. Later I was Performance Management Lead at Ilim Group and Head of HR &amp; Talent Development at Luxoft. Then I worked for eight years as a Scrum Master and business analyst at Raiffeisen Bank, T-Systems, Nokia and Deutsche Telekom. Now I bring both sides together: I use data to answer people questions. I work with Power BI (DAX, Power Query), Excel and SQL.</p>
+    </div>
+  </section>
+
   <header>
     <p class="eyebrow">People analytics case study · Power BI</p>
     <h1>NorthStar People Analytics</h1>
