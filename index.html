@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Portfolio case study by Aleksandra Milchakova: a four-page Power BI HR dashboard for the fictional IT company NorthStar, from question to recommendations.">
+<meta property="og:title" content="NorthStar People Analytics">
+<meta property="og:description" content="Portfolio case study by Aleksandra Milchakova: a four-page Power BI HR dashboard for the fictional IT company NorthStar, from question to recommendations.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://milchakovaaleksandra-dev.github.io/northstar-case/img/overview.png">
+<title>NorthStar People Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (~760px) with wide figures; six numbered phases follow the Ask→Act case-study framework */
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2033; --muted:#5d6278; --line:#dfe2ee;
+  --accent:#5357c4; --accent-soft:#e8e9fa; --y24:#6db57a; --y25:#5357c4; --warn:#b4542f;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14151f; --surface:#1d1f2d; --fg:#e7e8f2; --muted:#a3a7bd; --line:#2f3245;
+  --accent:#9a9dff; --accent-soft:#272a46; --y24:#7fcb8c; --y25:#9a9dff; --warn:#f08a62; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14151f; --surface:#1d1f2d; --fg:#e7e8f2; --muted:#a3a7bd; --line:#2f3245;
+  --accent:#9a9dff; --accent-soft:#272a46; --y24:#7fcb8c; --y25:#9a9dff; --warn:#f08a62; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto;padding-block:48px 72px}
+.col{max-width:760px}
+h1,h2,h3{line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.6rem;font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.15rem;color:var(--muted);margin-top:14px}
+header{display:grid;gap:12px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px 28px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.meta dt{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.meta dd{margin:4px 0 0;font-size:.95rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:40px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 18px 16px;display:grid;gap:6px;align-content:start}
+.kpi b{font-family:var(--font-mono);font-weight:500;font-size:1.9rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi span{font-size:.92rem;color:var(--muted);line-height:1.45}
+nav.phases{margin-top:44px;display:flex;flex-wrap:wrap;gap:8px}
+nav.phases a{font-family:var(--font-mono);font-size:.82rem;color:var(--fg);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px}
+nav.phases a:hover,nav.phases a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+section.phase{margin-top:72px;display:grid;gap:18px;scroll-margin-top:24px}
+.ph-head{display:flex;align-items:baseline;gap:14px}
+.ph-num{font-family:var(--font-mono);font-size:.9rem;color:var(--accent);min-width:2.2em}
+.ph-sub{color:var(--muted);margin-top:-6px}
+.prose{display:grid;gap:14px}
+ul.clean{margin:0;padding-left:1.1em;display:grid;gap:8px}
+ul.clean li::marker{color:var(--accent)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:var(--font-mono);font-weight:500;font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--font-mono);text-align:right}
+.issue{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.issue > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.issue h3{font-size:.95rem;margin-bottom:6px}
+.issue p{font-size:.95rem;color:var(--muted)}
+@media (max-width:640px){.issue{grid-template-columns:minmax(0,1fr)}}
+.finding{display:grid;gap:10px;padding:20px 0;border-top:1px solid var(--line)}
+.finding:first-of-type{border-top:0;padding-top:4px}
+.finding p{color:var(--fg)}
+.finding .so{color:var(--muted);font-size:.95rem}
+.tag{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tag.no{color:var(--warn)}
+/* grade bars */
+.bars{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.bars .legend{display:flex;gap:16px;font-size:.82rem;color:var(--muted)}
+.bars .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.brow{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;align-items:center}
+.brow > span{font-size:.9rem}
+.btrack{display:grid;gap:4px}
+.bar{height:14px;border-radius:3px;position:relative;min-width:2px}
+.bar em{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);font-style:normal;font-family:var(--font-mono);font-size:.78rem;color:var(--muted);white-space:nowrap}
+.b24{background:var(--y24)} .b25{background:var(--y25)}
+figure{margin:0;display:grid;gap:10px}
+figure img{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:.92rem;color:var(--muted)}
+figcaption b{color:var(--fg);font-weight:600}
+.shots{display:grid;gap:40px}
+.recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.rec{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:8px;align-content:start}
+.rec h3{font-size:1rem}
+.rec p{font-size:.95rem;color:var(--muted)}
+.note{font-size:.88rem;color:var(--muted);background:var(--accent-soft);border-radius:10px;padding:14px 16px}
+footer{margin-top:80px;padding-top:20px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted);display:grid;gap:6px}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+<style>html,body{margin:0} img{max-width:100%}</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">People analytics case study · Power BI</p>
+    <h1>NorthStar People Analytics</h1>
+    <p class="lede col">NorthStar is a fictional IT company with 800 employees. In 2025 it kept growing, but almost twice as many people left. I built a four-page Power BI dashboard to find out who is leaving, why, and what the company could do about it.</p>
+    <dl class="meta">
+      <div><dt>Author</dt><dd>Aleksandra Milchakova, HR Analyst</dd></div>
+      <div><dt>Tools</dt><dd>Power BI Desktop, DAX, Power Query, Excel</dd></div>
+      <div><dt>Data</dt><dd>Synthetic HR dataset, 7 tables</dd></div>
+      <div><dt>Period</dt><dd>January 2024 – December 2025</dd></div>
+    </dl>
+  </header>
+
+  <div class="kpis" aria-label="Key findings">
+    <div class="kpi"><b>24.0%</b><span>Annual turnover in 2025, up from 13.4% in 2024. Headcount still grew from 523 to 602.</span></div>
+    <div class="kpi"><b>80%</b><span>of leavers quit by their own choice, in both years.</span></div>
+    <div class="kpi"><b>44%</b><span>of 2025 leavers had worked less than one year (30% in 2024).</span></div>
+    <div class="kpi"><b>~8%</b><span>regular raise for every performance score, from 1 to 5. Pay is not linked to results.</span></div>
+  </div>
+
+  <nav class="phases" aria-label="Case study phases">
+    <a href="#ask">1 Ask</a><a href="#prepare">2 Prepare</a><a href="#process">3 Process</a>
+    <a href="#analyze">4 Analyze</a><a href="#share">5 Share</a><a href="#act">6 Act</a>
+  </nav>
+
+  <!-- 1 ASK -->
+  <section class="phase col" id="ask">
+    <div class="ph-head"><span class="ph-num">01</span><h2>Ask</h2></div>
+    <p class="ph-sub">What does the business need to know?</p>
+    <div class="prose">
+      <p>The company is growing, but leaders feel that more people are leaving. Before spending money on retention programs, they want facts. The dashboard answers four questions:</p>
+      <ul class="clean">
+        <li>How did headcount, hires and turnover change from 2024 to 2025?</li>
+        <li>Who is leaving: by reason, tenure, grade, department and location?</li>
+        <li>Can pay explain the exits? Are raises and promotions linked to performance?</li>
+        <li>Do sick leave or time without a project push people to leave?</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2 PREPARE -->
+  <section class="phase col" id="prepare">
+    <div class="ph-head"><span class="ph-num">02</span><h2>Prepare</h2></div>
+    <p class="ph-sub">What data do we have?</p>
+    <div class="prose">
+      <p>A synthetic HR dataset in one Excel file, linked by <code>employee_id</code>. The data is fictional and used for practice only.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Table</th><th>Rows</th><th>What it holds</th></tr></thead>
+        <tbody>
+          <tr><td>employees</td><td class="num">800</td><td>Hire and exit dates, exit reason, specialization, location</td></tr>
+          <tr><td>departments</td><td class="num">6</td><td>Department and business unit</td></tr>
+          <tr><td>compensation_history</td><td class="num">1,945</td><td>Salary and grade over time (Junior to Lead)</td></tr>
+          <tr><td>performance_reviews</td><td class="num">1,848</td><td>Scores from 1 to 5, twice a year, promotion recommendation</td></tr>
+          <tr><td>absences</td><td class="num">3,390</td><td>Vacation, sick leave, unpaid leave</td></tr>
+          <tr><td>projects</td><td class="num">40</td><td>Client industry, commercial or internal</td></tr>
+          <tr><td>project_assignments</td><td class="num">8,846</td><td>Who works on which project, at 50, 80 or 100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3 PROCESS -->
+  <section class="phase col" id="process">
+    <div class="ph-head"><span class="ph-num">03</span><h2>Process</h2></div>
+    <p class="ph-sub">Cleaning the data and building the model.</p>
+    <div class="prose">
+      <p>The raw file had a few traps that broke the model. Each one showed up as a wrong number, and each one was fixed at the source in Power Query.</p>
+    </div>
+    <div class="issue">
+      <div><h3>Summary rows inside data</h3><p>Some sheets had total rows at the bottom, like “minimum salary ever”. One of them added 1,190 to the monthly payroll. Removed by filtering rows without an employee ID.</p></div>
+      <div><h3>Blank keys</h3><p>A blank <code>project_id</code> and a text row in the review dates stopped relationships and date logic from working. Removed and typed correctly.</p></div>
+      <div><h3>Wrong relationship direction</h3><p>Two links were set as many-to-many. Rebuilt as one-to-many from lookup tables to fact tables.</p></div>
+      <div><h3>Two dates, one calendar</h3><p>Hires and exits both need the calendar. Hire date is the active link; exit date is an inactive link, switched on in measures with <code>USERELATIONSHIP</code>.</p></div>
+    </div>
+    <div class="prose">
+      <p>Key measures I wrote in DAX:</p>
+      <ul class="clean">
+        <li><b>Headcount on any date:</b> hired on or before the date and not yet left. One measure works on cards, slicers and monthly charts.</li>
+        <li><b>Turnover %:</b> leavers divided by average headcount (start and end of period), split into voluntary and involuntary.</li>
+        <li><b>Retention %:</b> share of people employed on 1 January who are still here on 31 December.</li>
+        <li><b>First-year leavers, tenure at exit, salary on a date</b> (average, median, quartiles), <b>raise %</b> from a “previous salary” column, <b>bench %</b> from active project assignments.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 ANALYZE -->
+  <section class="phase" id="analyze">
+    <div class="col">
+      <div class="ph-head"><span class="ph-num">04</span><h2>Analyze</h2></div>
+      <p class="ph-sub" style="margin-top:12px">What the data says, and what it does not.</p>
+    </div>
+
+    <div class="col" style="display:grid;gap:0">
+      <div class="finding">
+        <span class="tag">Growth</span>
+        <h3>The company grew, but turnover almost doubled</h3>
+        <p>Headcount rose from 523 to 602 with 214 hires. But 135 people left, and turnover went from 13.4% to 24.0%. Headcount peaked at 624 in June 2025 and then fell for the first time.</p>
+      </div>
+      <div class="finding">
+        <span class="tag">Who leaves</span>
+        <h3>People leave by choice, and many leave early</h3>
+        <p>Four out of five exits are voluntary. Voluntary turnover rose from 10.8% to 19.2%. In 2025, 44% of leavers had worked less than a year, and 36 left in their first six months. Retention of people already on board fell from 88.8% to 82.6%.</p>
+        <p class="so">So the problem is not only hiring more people, it is keeping new people.</p>
+      </div>
+      <div class="finding">
+        <span class="tag">Grades</span>
+        <h3>Juniors and Middles leave the most</h3>
+        <div class="bars" role="img" aria-label="Turnover by grade: Junior 13.2% in 2024, 36.5% in 2025; Middle 16.3% and 29.8%; Senior 12.2% and 18.6%; Lead 9.9% and 14.4%">
+          <div class="legend"><span><i class="b24"></i>2024</span><span><i class="b25"></i>2025</span></div>
+          <div class="brow"><span>Junior</span><div class="btrack"><div class="bar b24" style="width:28.9%"><em>13.2%</em></div><div class="bar b25" style="width:80%"><em>36.5%</em></div></div></div>
+          <div class="brow"><span>Middle</span><div class="btrack"><div class="bar b24" style="width:35.7%"><em>16.3%</em></div><div class="bar b25" style="width:65.3%"><em>29.8%</em></div></div></div>
+          <div class="brow"><span>Senior</span><div class="btrack"><div class="bar b24" style="width:26.7%"><em>12.2%</em></div><div class="bar b25" style="width:40.8%"><em>18.6%</em></div></div></div>
+          <div class="brow"><span>Lead</span><div class="btrack"><div class="bar b24" style="width:21.7%"><em>9.9%</em></div><div class="bar b25" style="width:31.6%"><em>14.4%</em></div></div></div>
+        </div>
+      </div>
+      <div class="finding">
+        <span class="tag">Hot spots</span>
+        <h3>The calmest places became the worst</h3>
+        <p>Corporate Services had the lowest turnover in 2024 (7.4%) and the highest in 2025 (26.9%). Office B went from 8.1% to 25.3%. Comparing years made this visible; one year alone would hide it.</p>
+      </div>
+      <div class="finding">
+        <span class="tag">Pay</span>
+        <h3>Pay level is fine, but pay is not linked to results</h3>
+        <p>Average salary grew 12% and 83% of year-end staff got a raise, with two review cycles in 2025. Leavers earned the same as stayers in the same grade. But the regular raise was about 8% for every score from 1 to 5. Promotions (+22%) went to 22% of people rated 1 and only 4% of people rated 5.</p>
+        <p class="so">Strong performers see no difference in money or career. That is a classic reason good people leave.</p>
+      </div>
+      <div class="finding">
+        <span class="tag">Projects</span>
+        <h3>One project closure explains the July spike</h3>
+        <p>Project 01 ended on 1 June 2025. The share of staff without a project jumped to 14.4%. In July, 24 people left; 10 of them came from that project. In September most people on the bench got new projects.</p>
+      </div>
+      <div class="finding">
+        <span class="tag no">Not confirmed</span>
+        <h3>Sick leave and the bench do not explain the overall rise</h3>
+        <p>Sick days per employee fell from 4.5 to 4.1, with no hot spot in any department or office. In 2024 the bench was even higher (14–16% for eight months), yet few people left. These hypotheses were tested and rejected.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 SHARE -->
+  <section class="phase" id="share">
+    <div class="col">
+      <div class="ph-head"><span class="ph-num">05</span><h2>Share</h2></div>
+      <p class="ph-sub" style="margin-top:12px">Four dashboard pages, each with a year slicer and one question.</p>
+    </div>
+    <div class="shots">
+      <figure>
+        <a href="img/overview.png" target="_blank" rel="noopener"><img src="img/overview.png" alt="Overview page: headcount, hires, terminations, turnover and tenure cards; monthly headcount, turnover and hires charts; headcount by department, specialization and location" loading="lazy" width="2255" height="1292"></a>
+        <figcaption><b>Overview.</b> What happened: growth in headcount, a sharp rise in turnover, 2024 and 2025 side by side.</figcaption>
+      </figure>
+      <figure>
+        <a href="img/turnover.png" target="_blank" rel="noopener"><img src="img/turnover.png" alt="Turnover page: voluntary and involuntary turnover, tenure at exit, first-year leavers and retention; leavers by month and reason; turnover by department, grade and location" loading="lazy" width="2255" height="1292"></a>
+        <figcaption><b>Turnover.</b> Who leaves: by reason, tenure at exit, department, grade and location.</figcaption>
+      </figure>
+      <figure>
+        <a href="img/compensation.png" target="_blank" rel="noopener"><img src="img/compensation.png" alt="Compensation page: salary and payroll cards; monthly headcount, payroll and average salary; salary range by grade; regular raise and promotion rate by performance score" loading="lazy" width="2255" height="1292"></a>
+        <figcaption><b>Compensation.</b> Can pay explain it: salary steps after each review cycle, overlapping grade ranges, raises and promotions by performance score.</figcaption>
+      </figure>
+      <figure>
+        <a href="img/absences.png" target="_blank" rel="noopener"><img src="img/absences.png" alt="Absences and utilization page: sick days, bench and absence rate cards; leavers on bench vs on project by month; bench share by month; sick days by department and location" loading="lazy" width="2255" height="1292"></a>
+        <figcaption><b>Absences &amp; Utilization.</b> Testing the other hypotheses: sick leave, time without a project, and the closure of Project 01.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 6 ACT -->
+  <section class="phase" id="act">
+    <div class="col">
+      <div class="ph-head"><span class="ph-num">06</span><h2>Act</h2></div>
+      <p class="ph-sub" style="margin-top:12px">What I would recommend to NorthStar leaders.</p>
+    </div>
+    <div class="recs">
+      <div class="rec"><h3>Fix the first year</h3><p>Review the spring 2025 hiring wave: hiring quality, onboarding and the first manager. Add 30-60-90 day check-ins and a buddy for every new hire.</p></div>
+      <div class="rec"><h3>Link pay and promotion to performance</h3><p>Make raises depend on the review score and make the manager’s promotion recommendation count. Review grade pay ranges, which overlap a lot today.</p></div>
+      <div class="rec"><h3>Investigate the hot spots</h3><p>Run stay interviews in Corporate Services and Office B. Build a 2025 timeline of manager changes and redundancies, and check for a “survivor effect” after layoffs.</p></div>
+      <div class="rec"><h3>Plan before a project ends</h3><p>Start moving people to new work before a big project closes, not after. Watch the bench every month and act when it goes above 10%.</p></div>
+      <div class="rec"><h3>Collect better data</h3><p>Add exit interview reasons, the direct manager and a short quarterly engagement survey. Today the data shows who leaves, but not always why.</p></div>
+    </div>
+    <p class="note col">Next step: check whether top performers leave more often. A first look at the December 2024 review shows that 26% of people rated 5 quit in 2025, against 11% of people rated 1–3. The group is small (35 people), so this needs a careful second look.</p>
+  </section>
+
+  <footer>
+    <p>Case study by Aleksandra Milchakova, HR Analyst. Built in Power BI Desktop.</p>
+    <p>All data is synthetic and describes a fictional company. Numbers are for practice and portfolio use only.</p>
+  </footer>
+</div>
+</body>
+</html>
