@@ -38,8 +38,9 @@ p{margin:0}
 .eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 .lede{font-size:1.15rem;color:var(--muted);margin-top:14px}
 header{display:grid;gap:12px}
-.top{margin-bottom:24px}
-.about{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:28px;max-width:760px}
+.top{margin-bottom:12px;display:grid;gap:12px}
+.about-wrap{margin-top:48px;display:grid;gap:12px;max-width:760px}
+.about{display:flex;gap:18px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
 .avatar{flex:none;width:76px;height:76px;border-radius:50%;object-fit:cover;background:var(--accent-soft);border:2px solid var(--line)}
 .about-text{display:grid;gap:8px;min-width:0}
 .about-text p{font-size:.98rem;color:var(--muted)}
@@ -113,16 +114,8 @@ a{color:var(--accent)}
     <h1>NorthStar People Analytics</h1>
   </header>
 
-  <section class="about" aria-label="About the author">
-    <img class="avatar" src="img/avatar-solid.jpg" alt="Aleksandra Milchakova" width="76" height="76">
-    <div class="about-text">
-      <p class="about-name">Aleksandra Milchakova <span>HR Analyst · Valencia, Spain</span></p>
-      <p>I started my career in HR and grew step by step. At Coca-Cola HBC I was an HR specialist and the SAP champion for recruiting, learning and development: I helped move these processes into SAP and trained 1,200 users. Later I was Performance Management Lead at Ilim Group and Head of HR &amp; Talent Development at Luxoft. Then I worked for eight years as a Scrum Master and business analyst at Raiffeisen Bank, T-Systems, Nokia and Deutsche Telekom. Now I bring both sides together: I use data to answer people questions. I work with Power BI (DAX, Power Query), Excel and SQL.</p>
-    </div>
-  </section>
-
   <header>
-    <p class="lede col">NorthStar is a fictional IT company with 800 employees. In 2025 it kept growing, but almost twice as many people left. I built a four-page Power BI dashboard to find out who is leaving, why, and what the company could do about it.</p>
+    <p class="lede col">This is a portfolio case study in HR analytics. NorthStar is a fictional IT company with 800 employees. In 2025 it kept growing, but almost twice as many people left. I built a four-page Power BI dashboard to find out who is leaving, why, and what the company could do about it.</p>
     <dl class="meta">
       <div><dt>Tools</dt><dd>Power BI Desktop, DAX, Power Query, Excel</dd></div>
       <div><dt>Data</dt><dd>Synthetic HR dataset, 7 tables</dd></div>
@@ -136,6 +129,17 @@ a{color:var(--accent)}
     <div class="kpi"><b>44%</b><span>of 2025 leavers had worked less than one year (30% in 2024).</span></div>
     <div class="kpi"><b>~8%</b><span>regular raise for every performance score, from 1 to 5. Pay is not linked to results.</span></div>
   </div>
+
+  <section class="about-wrap" aria-label="About the analyst">
+    <p class="eyebrow">About the analyst</p>
+    <div class="about">
+      <img class="avatar" src="img/avatar-solid.jpg" alt="Aleksandra Milchakova" width="76" height="76">
+      <div class="about-text">
+        <p class="about-name">Aleksandra Milchakova <span>HR Analyst · Valencia, Spain</span></p>
+        <p>I started my career in HR and grew step by step. At Coca-Cola HBC I was an HR specialist and the SAP champion for recruiting, learning and development: I helped move these processes into SAP and trained 1,200 users. Later I was Performance Management Lead at Ilim Group and Head of HR &amp; Talent Development at Luxoft. Then I worked for eight years as a Scrum Master and business analyst at Raiffeisen Bank, T-Systems, Nokia and Deutsche Telekom. Now I bring both sides together: I use data to answer people questions. I work with Power BI (DAX, Power Query), Excel and SQL.</p>
+      </div>
+    </div>
+  </section>
 
   <nav class="phases" aria-label="Case study phases">
     <a href="#ask">1 Ask</a><a href="#prepare">2 Prepare</a><a href="#process">3 Process</a>
